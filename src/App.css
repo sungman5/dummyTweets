@@ -88,6 +88,10 @@ main {
   flex: 1 0 0;
 }
 
+.hide {
+  display: none;
+}
+
 .sidebar {
   display: flex;
   flex-direction: column;

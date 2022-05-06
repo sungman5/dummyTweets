@@ -1,15 +1,16 @@
 import React from 'react';
 import './App.css';
 import { dummyTweets } from './static/dummyData';
+import { dummyNotice } from './static/dummyData';
 // ! 위 코드는 수정하지 않습니다.
 console.log(dummyTweets) // 개발 단계에서 사용하는 더미 데이터입니다.
 
-const Sidebar = () => {
-
+const Sidebar = () => { 
 
   return (
     <section className="sidebar">
       {<i className="far fa-comment-dots"></i>}
+      {<i className="far fa-bell" ></i>}
     </section>
   );
 };
@@ -37,34 +38,57 @@ const Footer = () => {
 
 const Tweets = () => {
   return (
-    <ul className="tweets">
-      {dummyTweets.map((tweet) => {
-        const isParkHacker = tweet.username === 'parkhacker'
-        const tweetUserNameClass = isParkHacker
-        ? 'tweet__username tweet__username--purple'
-        : 'tweet__username';        
+    // 말풍선을 클릭하면 className ="tweets"가 보여주면 되고
+    // 벨을 클릭하면 className = "notice" 보여주면 될듯
+    
+      <div className="tweetBody">
+        <ul className="tweets">
+          {dummyTweets.map((tweet) => {
+            const isParkHacker = tweet.username === 'parkhacker'
+            const tweetUserNameClass = isParkHacker
+            ? 'tweet__username tweet__username--purple'
+            : 'tweet__username';
+            return (
+              <li className="tweet" key={tweet.id}>
+                <div className="tweet__profile">
+                  <img src={tweet.picture}></img>
+                  {/* TODO: 트윗 저자의 프로필 사진이 있어야 합니다.  */}
+                </div>
+                <div className="tweet__content">
+                  <div className="tweet__userInfo">
+                    <span className={tweetUserNameClass}>{tweet.username}</span>
+                    <span className='tweet__createdAt'>{tweet.createdAt}</span>
+                    <div className='tweet__message'>{tweet.content}</div>
+                    {/* TODO : 유져 이름이 있어야 합니다. */}
+                    {/* TODO : 이름이 "parkhacker"인 경우, 이름 배경색을 rgb(235, 229, 249)으로 바꿔야 합니다. */}
+                    {/* TODO : 트윗 생성 일자가 있어야 합니다. */}
+                  </div>
+                  {/* TODO : 트윗 메세지가 있어야 합니다. */}
+                </div>
+              </li>
+            );
+          })}
+        </ul>        
+        {/* 
 
-        return (
-          <li className="tweet" key={tweet.id}>
-            <div className="tweet__profile">
-              <img src={tweet.picture}></img>
-              {/* TODO: 트윗 저자의 프로필 사진이 있어야 합니다.  */}
-            </div>
-            <div className="tweet__content">
-              <div className="tweet__userInfo">
-                <span className={tweetUserNameClass}>{tweet.username}</span>
-                <span className='tweet__createdAt'>{tweet.createdAt}</span>
-                <div className='tweet__message'>{tweet.content}</div>
-                {/* TODO : 유져 이름이 있어야 합니다. */}
-                {/* TODO : 이름이 "parkhacker"인 경우, 이름 배경색을 rgb(235, 229, 249)으로 바꿔야 합니다. */}
-                {/* TODO : 트윗 생성 일자가 있어야 합니다. */}
-              </div>
-              {/* TODO : 트윗 메세지가 있어야 합니다. */}
-            </div>
-          </li>
-        );
-      })}
-    </ul>
+        1. notification-message 버튼 클릭시, hide 클래스를 제거, tweets에게 hide 클래스 부여
+        2. tweet 클릭시 hide 클래스 제거, notification-message 에 hide 부여
+        
+        */}
+        
+        <ul className="notifications hide">          
+          {dummyNotice.map((notice)=>{
+            return(
+              <li className='notification__message' key={notice.id}>
+                <p className='notification__content'>{notice.content}</p>
+              </li>
+            );
+          })
+
+          }        
+        </ul>
+      </div>
+    
   );
 };
 
